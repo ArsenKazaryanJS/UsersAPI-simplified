@@ -1,4 +1,4 @@
-const createPath = require("./createPathFunc");
+const createPath = require("../createPathFunc.js");
 const sendResponse = require("./sendRespons.js");
 const fs = require("fs").promises;
 
@@ -33,10 +33,23 @@ const handleGetUsersName = (req, res) => {
     }).catch((err) => sendResponse(req,res,err.toString(),'text/plain'))
  }
 
+
+ const handleSortInId = (req,res) => {
+  fs.readFile(createPath('db','users.json'),'utf-8')
+  .then((data)=>{
+    const users = JSON.parse(data)
+    const usersSort = users.sort((a, b) => a.id - b.id);
+    sendResponse(req,res,JSON.stringify(usersSort),'application/json') 
+  })
+   
+ }
+ 
+
 module.exports = {
   handleGetRoot,
   handleGetUsers,
   handleGetUserId,
   handleGetUsers,
-  handleGetUsersName
+  handleGetUsersName,
+  handleSortInId
 };

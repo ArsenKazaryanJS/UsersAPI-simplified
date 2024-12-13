@@ -1,5 +1,5 @@
 const sendRespons = require('./sendRespons.js')
-const createPath = require('./createPathFunc.js')
+const createPath = require('../createPathFunc.js')
 const fs = require('fs').promises
 
 
@@ -9,7 +9,6 @@ let body = [];
 req.on('data',(chunk) => body.push(chunk))
 
 req.on('end', () => {
-//   body = JSON.stringify(body[0].toString())
   body = JSON.parse(Buffer.concat(body).toString());
   
   fs.readFile(createPath('db','users.json'), 'utf-8')
